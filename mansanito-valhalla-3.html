@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>VALHALLA FITNESS — MANSANITO</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Metal+Mania&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:#0a0a0f;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(139,0,0,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(30,30,80,0.2) 0%, transparent 50%);
+    font-family:'Cinzel Decorative',serif;
+    color:#e8e0d0;
+    padding-bottom:80px;
+  }
+  button{cursor:pointer;font-family:'Cinzel Decorative',serif;}
+
+  /* HEADER */
+  #header{
+    background:linear-gradient(180deg,#0d0000 0%,#1a0505 50%,#0a0a0f 100%);
+    border-bottom:1px solid #2a0000;
+    padding:20px 16px 12px;
+    text-align:center;
+  }
+  .runes{font-size:0.6rem;color:#3a1a1a;letter-spacing:0.5em;margin-bottom:8px;font-family:'Metal Mania',cursive;}
+  .main-title{font-size:2rem;font-weight:900;color:#cc0000;letter-spacing:0.1em;line-height:1;font-family:'Metal Mania',cursive;text-shadow:0 0 10px rgba(139,0,0,0.8),0 0 30px rgba(139,0,0,0.4);}
+  .sub-title{font-size:0.65rem;color:#888;letter-spacing:0.4em;margin-top:2px;}
+  .warrior-name{font-size:0.75rem;color:#ff4444;letter-spacing:0.3em;margin-top:4px;font-family:'Metal Mania',cursive;text-shadow:0 0 10px rgba(139,0,0,0.8),0 0 30px rgba(139,0,0,0.4);}
+  .flame-line{background:linear-gradient(90deg,transparent,#8b0000,#ff4400,#8b0000,transparent);height:1px;width:100%;box-shadow:0 0 8px rgba(255,68,0,0.6);margin:10px 0;}
+  .stats-row{display:flex;justify-content:space-around;margin-top:8px;}
+  .stat-val{font-size:1.4rem;color:#ff4444;font-family:'Metal Mania',cursive;}
+  .stat-lbl{font-size:0.5rem;color:#666;letter-spacing:0.15em;}
+  #beat-btn{margin-top:12px;padding:8px 20px;font-size:0.55rem;letter-spacing:0.2em;border-radius:2px;background:linear-gradient(135deg,#1a0505,#2d0808);border:1px solid #8b0000;color:#ff4444;transition:all 0.2s;}
+  #beat-btn:hover{background:linear-gradient(135deg,#2d0808,#4a0a0a);border-color:#ff2222;box-shadow:0 0 15px rgba(255,0,0,0.4);}
+  .ticker-wrap{overflow:hidden;margin-top:10px;height:16px;}
+  .ticker-wrap{position:relative;overflow:hidden;}
+  .ticker-text{font-size:0.5rem;color:#cc2222;letter-spacing:0.15em;white-space:nowrap;display:inline-block;position:relative;}
+
+  /* WEEK SELECTOR */
+  #week-bar{display:flex;gap:6px;padding:12px 16px;background:#080808;}
+  .week-btn{background:linear-gradient(135deg,#111,#1a1a1a);border:1px solid #333;color:#888;font-size:0.55rem;padding:6px 10px;border-radius:2px;transition:all 0.2s;flex:1;}
+  .week-btn.active{background:linear-gradient(135deg,#1a0505,#2d0808);border-color:#8b0000;color:#ff4444;box-shadow:0 0 10px rgba(139,0,0,0.3);}
+
+  /* TABS */
+  #tabs{display:flex;border-bottom:1px solid #1a1a1a;background:#080808;padding:0 8px;}
+  .tab-btn{background:transparent;border:none;border-bottom:2px solid transparent;color:#666;font-size:0.6rem;letter-spacing:0.1em;padding:8px 4px;transition:all 0.2s;flex:1;text-align:center;}
+  .tab-btn.active{color:#cc2222;border-bottom-color:#8b0000;}
+
+  /* PANELS */
+  .panel{display:none;padding:16px;}
+  .panel.active{display:block;}
+
+  /* TODAY CARD */
+  .today-card{background:linear-gradient(135deg,#0d0505,#150505);border:1px solid #3a0000;border-radius:4px;padding:16px;margin-bottom:16px;text-align:center;transition:box-shadow 0.3s;}
+  .today-card.hit{animation:hitFlash 0.4s ease-out;}
+  @keyframes hitFlash{0%{box-shadow:0 0 0 rgba(255,50,50,0);}30%{box-shadow:0 0 60px rgba(255,50,50,0.8);}100%{box-shadow:0 0 0 rgba(255,50,50,0);}}
+  .today-icon{font-size:2.5rem;margin-bottom:4px;}
+  .today-day{font-size:1.1rem;font-family:'Metal Mania',cursive;letter-spacing:0.2em;}
+  .today-sub{font-size:0.55rem;color:#666;letter-spacing:0.3em;margin-top:2px;}
+
+  /* REWARD BADGE */
+  .reward-badge{background:linear-gradient(135deg,#0a0a00,#1a1500);border:1px solid #8b7000;border-radius:4px;padding:12px 16px;margin-bottom:16px;text-align:center;box-shadow:0 0 20px rgba(139,100,0,0.3);}
+  .reward-icon{font-size:1.8rem;}
+  .reward-text{font-size:0.75rem;color:#ffd700;font-family:'Metal Mania',cursive;letter-spacing:0.1em;margin-top:4px;}
+  .reward-sub{font-size:0.5rem;color:#aa9000;margin-top:4px;font-family:'Crimson Text',serif;font-style:italic;}
+
+  /* SECTION DIVIDER */
+  .section-div{font-size:0.6rem;color:#666;letter-spacing:0.3em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .section-div .fl{flex:1;background:linear-gradient(90deg,transparent,#8b0000,#ff4400,#8b0000,transparent);height:1px;box-shadow:0 0 8px rgba(255,68,0,0.6);}
+
+  /* DRUM BUTTONS GRID */
+  .drum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+  .drum-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px;}
+  .drum-btn{background:radial-gradient(circle at 40% 35%,#2a2a2a,#111);border:2px solid #444;border-radius:50%;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;aspect-ratio:1;padding:8px;}
+  .drum-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;}
+  .como-btn{background:linear-gradient(135deg,#1a0505,#2d0808);border:1px solid #8b0000;color:#ff4444;font-family:"Cinzel Decorative",serif;font-size:0.42rem;letter-spacing:0.1em;padding:4px 10px;border-radius:2px;width:90%;}
+  .como-btn:hover{background:linear-gradient(135deg,#2d0808,#4a0a0a);box-shadow:0 0 8px rgba(255,0,0,0.3);}
+  .drum-btn:hover{border-color:#8b0000;box-shadow:0 0 20px rgba(139,0,0,0.5),inset 0 0 10px rgba(139,0,0,0.2);transform:scale(1.05);}
+  .drum-btn.done{background:radial-gradient(circle at 40% 35%,#1a0a0a,#0d0505);border-color:#8b0000;box-shadow:0 0 25px rgba(255,50,50,0.6),inset 0 0 15px rgba(139,0,0,0.3);}
+  .drum-btn .d-icon{font-size:1.2rem;}
+  .drum-btn .d-name{font-size:0.45rem;color:#888;letter-spacing:0.08em;margin-top:2px;text-align:center;}
+  .drum-btn .d-sets{font-size:0.55rem;color:#666;font-family:'Metal Mania',cursive;}
+  .drum-btn .d-done{font-size:0.35rem;color:#ff2222;margin-top:1px;}
+  .drum-btn.done .d-name{color:#ff4444;}
+  .drum-btn.done .d-sets{color:#cc3333;}
+
+  /* LIBRE */
+  .libre-box{text-align:center;padding:30px 16px;}
+  .libre-icon{font-size:3rem;margin-bottom:12px;}
+  .libre-title{font-size:1rem;color:#8b44d4;font-family:'Metal Mania',cursive;letter-spacing:0.2em;}
+  .libre-txt{font-size:0.65rem;color:#666;margin-top:8px;font-family:'Crimson Text',serif;font-style:italic;line-height:1.6;}
+
+  /* WALK MAIN BTN */
+  .walk-center{text-align:center;margin-bottom:16px;}
+  .walk-btn{background:radial-gradient(circle at 40% 35%,#2a2a2a,#111);border:2px solid #444;border-radius:50%;width:140px;height:140px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.15s;}
+  .walk-btn:hover{border-color:#8b0000;box-shadow:0 0 20px rgba(139,0,0,0.5);transform:scale(1.05);}
+  .walk-btn.done{background:radial-gradient(circle at 40% 35%,#1a0a0a,#0d0505);border-color:#8b0000;box-shadow:0 0 25px rgba(255,50,50,0.6);}
+  .walk-btn .w-icon{font-size:3rem;}
+  .walk-btn .w-name{font-size:0.55rem;color:#888;letter-spacing:0.1em;margin-top:4px;}
+  .walk-btn .w-time{font-size:0.45rem;color:#555;}
+  .walk-btn .w-done{font-size:0.4rem;color:#ff2222;margin-top:2px;}
+  .walk-btn.done .w-name{color:#ff4444;}
+  .walk-btn.done .w-time{color:#cc2222;}
+
+  /* TIPS */
+  .tip-item{background:linear-gradient(135deg,#0d0d0d,#111);border:1px solid #2a2a2a;border-left:3px solid #2980b9;padding:8px 12px;font-size:0.55rem;color:#888;font-family:'Crimson Text',serif;line-height:1.4;border-radius:0 4px 4px 0;margin-bottom:6px;}
+
+  /* RUTINA TAB */
+  .philosophy{background:linear-gradient(135deg,#0a0505,#100a0a);border:1px solid #2a1a1a;border-radius:4px;padding:12px 14px;margin-bottom:14px;font-size:0.6rem;color:#888;font-family:'Crimson Text',serif;line-height:1.7;font-style:italic;}
+  .ex-card{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:4px;padding:10px 12px;margin-bottom:8px;}
+  .ex-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .ex-icon{font-size:1.1rem;}
+  .ex-name{font-size:0.65rem;color:#cc4444;font-family:'Metal Mania',cursive;letter-spacing:0.1em;}
+  .ex-weeks{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+  .ex-week{text-align:center;background:#111;border:1px solid #222;border-radius:3px;padding:5px 2px;}
+  .ex-week.active{background:linear-gradient(135deg,#1a0505,#2d0808);border-color:#8b0000;}
+  .ex-week-num{font-size:0.4rem;color:#555;}
+  .ex-week-sets{font-size:0.6rem;color:#666;font-family:'Metal Mania',cursive;}
+  .ex-week.active .ex-week-sets{color:#ff4444;}
+
+  /* REWARDS */
+  .gold-div{font-size:0.6rem;color:#666;letter-spacing:0.3em;margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+  .gold-div .gl{flex:1;background:linear-gradient(90deg,transparent,#8b7000,transparent);height:1px;}
+  .reward-card{background:linear-gradient(135deg,#0a0a00,#141400);border:1px solid #5a5000;border-radius:4px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+  .reward-card-icon{font-size:2rem;}
+  .reward-card-text{font-size:0.65rem;color:#ffd700;font-family:'Metal Mania',cursive;letter-spacing:0.1em;}
+  .reward-card-sub{font-size:0.5rem;color:#aa9000;font-family:'Crimson Text',serif;font-style:italic;margin-top:2px;}
+
+  /* SEMANA TAB */
+  .week-day-card{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:4px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+  .week-day-card.today{background:linear-gradient(135deg,#150505,#1a0808);border-color:#5a0000;box-shadow:0 0 15px rgba(139,0,0,0.2);}
+  .day-circle{width:44px;height:44px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+  .day-circle.today{border-color:#c0392b;}
+  .day-circle.paseo{border-color:#333;}
+  .day-circle.libre-c{border-color:#333;}
+  .day-name{font-size:0.65rem;color:#888;font-family:'Metal Mania',cursive;letter-spacing:0.1em;}
+  .day-name.today{color:#ff4444;}
+  .day-desc{font-size:0.5rem;color:#555;letter-spacing:0.15em;margin-top:1px;}
+  .day-done{font-size:0.45rem;color:#882222;margin-top:3px;}
+  .today-badge{font-size:0.4rem;color:#cc2222;letter-spacing:0.2em;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.6;}}
+  .reward-dot{font-size:1.1rem;margin-left:auto;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:linear-gradient(135deg,#0d0505,#111);border:1px solid #8b0000;border-radius:6px;padding:20px;max-width:340px;width:100%;box-shadow:0 0 40px rgba(139,0,0,0.4);}
+  .modal-icon{font-size:2rem;text-align:center;margin-bottom:8px;}
+  .modal-title{font-size:0.9rem;color:#ff4444;font-family:'Metal Mania',cursive;letter-spacing:0.1em;text-align:center;margin-bottom:6px;}
+  .modal-desc{font-size:0.65rem;color:#aaa;font-family:'Crimson Text',serif;line-height:1.7;margin-bottom:14px;text-align:center;}
+  .modal-yt{display:block;background:linear-gradient(135deg,#1a0000,#2d0000);border:1px solid #8b0000;color:#ff4444;font-family:'Cinzel Decorative',serif;font-size:0.5rem;letter-spacing:0.15em;padding:8px 14px;border-radius:2px;text-decoration:none;text-align:center;margin-bottom:10px;}
+  .modal-yt:hover{background:linear-gradient(135deg,#2d0000,#440000);box-shadow:0 0 10px rgba(255,0,0,0.3);}
+  .modal-close{background:transparent;border:1px solid #333;color:#666;font-family:'Cinzel Decorative',serif;font-size:0.5rem;letter-spacing:0.15em;padding:6px 14px;border-radius:2px;width:100%;}
+  .modal-close:hover{border-color:#666;color:#aaa;}
+  .info-btn{background:transparent;border:1px solid #333;border-radius:50%;width:18px;height:18px;font-size:0.5rem;color:#555;display:inline-flex;align-items:center;justify-content:center;margin-left:6px;vertical-align:middle;flex-shrink:0;}
+  .info-btn:hover{border-color:#8b0000;color:#ff4444;}
+
+  /* SUMMARY */
+  .summary-box{background:linear-gradient(135deg,#0a0505,#111);border:1px solid #2a1a1a;border-radius:4px;padding:14px;margin-top:8px;text-align:center;}
+  .summary-title{font-size:0.55rem;color:#666;letter-spacing:0.2em;margin-bottom:8px;}
+  .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .summary-cell{border-radius:3px;padding:8px 4px;}
+  .summary-val{font-size:1rem;font-family:'Metal Mania',cursive;}
+  .summary-lbl{font-size:0.4rem;color:#666;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="runes">ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛋᛏᛒᛖᛗᛚᛜᛞᛟ</div>
+  <div class="main-title">VALHALLA</div>
+  <div class="sub-title">FITNESS — FORGED IN METAL</div>
+  <div class="warrior-name">⚔️ MANSANITO ⚔️</div>
+  <div class="flame-line"></div>
+  <div class="stats-row">
+    <div><div class="stat-val" id="stat-streak">0</div><div class="stat-lbl">DÍAS FORJADOS</div></div>
+    <div><div class="stat-val" id="stat-week">S1</div><div class="stat-lbl">SEMANA ACTUAL</div></div>
+    <div><div class="stat-val" id="stat-done">0</div><div class="stat-lbl">MISIONES OK</div></div>
+  </div>
+  <button id="beat-btn" onclick="toggleBeat()">🥁 ACTIVAR RITMO METAL</button>
+  <div class="ticker-wrap"><div class="ticker-text" id="ticker"></div></div>
+</div>
+
+<!-- WEEK SELECTOR -->
+<div id="week-bar">
+  <button class="week-btn active" onclick="setWeek(1)" id="wb1">SEMANA 1</button>
+  <button class="week-btn" onclick="setWeek(2)" id="wb2">SEMANA 2</button>
+  <button class="week-btn" onclick="setWeek(3)" id="wb3">SEMANA 3</button>
+  <button class="week-btn" onclick="setWeek(4)" id="wb4">SEMANA 4</button>
+</div>
+
+<!-- TABS -->
+<div id="tabs">
+  <button class="tab-btn active" onclick="setTab('hoy')" id="tab-hoy">HOY</button>
+  <button class="tab-btn" onclick="setTab('rutina')" id="tab-rutina">RUTINA</button>
+  <button class="tab-btn" onclick="setTab('semana')" id="tab-semana">SEMANA</button>
+</div>
+
+<!-- TAB HOY -->
+<div class="panel active" id="panel-hoy"></div>
+
+<!-- TAB RUTINA -->
+<div class="panel" id="panel-rutina"></div>
+
+<!-- TAB SEMANA -->
+<div class="panel" id="panel-semana"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+    <a class="modal-yt" id="modal-yt" target="_blank">▶ VER VÍDEO EN YOUTUBE</a>
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕ CERRAR</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const SCHEDULE = {
+  1:{type:"fuerza",label:"LUNES",icon:"🥁",part:"BOMBO",color:"#c0392b"},
+  2:{type:"paseo",label:"MARTES",icon:"🦮",part:"HI-HAT",color:"#2980b9"},
+  3:{type:"fuerza",label:"MIÉRCOLES",icon:"🥁",part:"CAJA",color:"#c0392b"},
+  4:{type:"paseo",label:"JUEVES",icon:"🦮",part:"CRASH",color:"#2980b9"},
+  5:{type:"libre",label:"VIERNES",icon:"🍺",part:"BAQUETAS",color:"#8e44ad"},
+  6:{type:"fuerza",label:"SÁBADO",icon:"🥁",part:"RIDE",color:"#c0392b"},
+  0:{type:"paseo",label:"DOMINGO",icon:"🦮",part:"TOM",color:"#2980b9"},
+};
+
+const STRENGTH = [
+  {name:"Sentadillas",icon:"💪",weeks:["3x8","3x10","3x12","4x12"],
+   desc:"Pies a la anchura de hombros, punta de los pies ligeramente hacia afuera. Baja como si fueras a sentarte, rodillas alineadas con los pies. Espalda recta.",
+   yt:"https://www.youtube.com/results?search_query=sentadillas+correctas+principiantes"},
+  {name:"Flexiones",icon:"🤜",weeks:["3x5","3x8","3x10","4x10"],
+   desc:"Manos a la anchura de hombros, cuerpo recto como una tabla. Baja el pecho al suelo y empuja. Si es difícil, empieza apoyando las rodillas.",
+   yt:"https://www.youtube.com/results?search_query=flexiones+correctas+principiantes"},
+  {name:"Plancha",icon:"⚡",weeks:["3x20s","3x30s","3x40s","4x45s"],
+   desc:"Apoya antebrazos y puntas de los pies. Cuerpo recto, abdomen apretado, no subas el culo ni lo bajes. Respira.",
+   yt:"https://www.youtube.com/results?search_query=plancha+abdominal+correcta+principiantes"},
+  {name:"Zancadas",icon:"🦵",weeks:["3x8","3x10","3x12","4x12"],
+   desc:"De pie, da un paso largo hacia adelante. Baja la rodilla trasera casi al suelo. Vuelve y cambia de pierna.",
+   yt:"https://www.youtube.com/results?search_query=zancadas+lunges+correctas+principiantes"},
+  {name:"Superman",icon:"🔱",weeks:["3x8","3x10","3x12","4x12"],
+   desc:"Tumbado boca abajo, brazos estirados al frente. Levanta brazos y piernas a la vez apretando glúteos y espalda. Mantén 2s y baja.",
+   yt:"https://www.youtube.com/results?search_query=ejercicio+superman+espalda+principiantes"},
+  {name:"Puente glúteo",icon:"🏔️",weeks:["3x10","3x12","3x15","4x15"],
+   desc:"Tumbado boca arriba, rodillas dobladas, pies en el suelo. Sube las caderas apretando glúteos hasta formar una línea recta. Baja despacio.",
+   yt:"https://www.youtube.com/results?search_query=puente+gluteo+hip+thrust+principiantes"},
+];
+
+const STRETCH = [
+  {name:"Cuello",duration:"30s",icon:"🎸",
+   desc:"Inclina la cabeza hacia un lado suavemente hasta notar tensión. Mantén. Cambia de lado.",
+   yt:"https://www.youtube.com/results?search_query=estiramiento+cuello+cervicales"},
+  {name:"Hombros",duration:"30s",icon:"⚔️",
+   desc:"Lleva un brazo cruzado al pecho y empuja con el otro. Mantén 30s cada lado.",
+   yt:"https://www.youtube.com/results?search_query=estiramiento+hombros+trapecio"},
+  {name:"Espalda baja",duration:"45s",icon:"🛡️",
+   desc:"Tumbado boca arriba, abraza las rodillas al pecho y balancéate suavemente.",
+   yt:"https://www.youtube.com/results?search_query=estiramiento+espalda+baja+lumbar"},
+  {name:"Caderas",duration:"45s",icon:"⚡",
+   desc:"De rodillas, adelanta una pierna en 90°. Empuja la cadera hacia adelante. Mantén y cambia.",
+   yt:"https://www.youtube.com/results?search_query=estiramiento+flexores+cadera"},
+  {name:"Isquiotibiales",duration:"60s",icon:"🔱",
+   desc:"De pie, apoya el talón en algo elevado con la pierna estirada. Inclínate hacia adelante sin doblar la espalda.",
+   yt:"https://www.youtube.com/results?search_query=estiramiento+isquiotibiales+principiantes"},
+  {name:"Gemelos",duration:"30s",icon:"🏔️",
+   desc:"Apoya las manos en la pared, adelanta una pierna y estira la otra hacia atrás con el talón en el suelo.",
+   yt:"https://www.youtube.com/results?search_query=estiramiento+gemelos+pantorrilla"},
+];
+
+const WALK_TIPS = [
+  "🐕 Lombardo manda hoy — dale 45 min mínimo de libertad total",
+  "🌲 Busca un parque con árboles. Lombardo y tú necesitáis naturaleza",
+  "🎵 Ponte los cascos: Slayer a tope = cardio de guerra",
+  "💪 Metallica en los auriculares. Cada paso es un riff.",
+  "🏔️ Motörhead shuffle a 140 BPM = el ritmo perfecto para caminar",
+  "⚔️ Megadeth en shuffle. Lombardo marca el tempo.",
+];
+
+const REWARDS = {
+  4:{icon:"🍺",text:"¡CERVEZAS CON LOS GILIPOLLAS!",sub:"Te lo has ganado, Mansanito"},
+  6:{icon:"🍗",text:"¡CENA ÉPICA CON LOS GILIPOLLAS!",sub:"Los Gilipollas te esperan, Mansanito"},
+};
+
+const MOTIVATIONAL = [
+  "¡TE LAMUPO, MANSANITO! AHORA A HACER SENTADILLAS.",
+  "ESTO NO NOS IMPORTA UNA MIERDA... PERO HAZLO IGUAL, MANSANITO.",
+  "¡TOMA MI PEPINO! — LOMBARDO TAMBIÉN NECESITA SU PASEO.",
+  "SLAYER NO DESCANSÓ. TÚ TAMPOCO, MANSANITO.",
+  "HETFIELD LEVANTÓ PESO. TÚ LEVANTAS EL CULO DEL SOFÁ.",
+  "LEMMY BEBÍA WHISKY Y HACÍA GIRAS. TÚ PUEDES CON UNA PLANCHA.",
+  "¡TE LAMUPO DOS VECES, MANSANITO! — EL BOMBO NO SE TOCA SOLO.",
+  "MUSTAINE NUNCA SE RINDIÓ. NI TÚ, MANSANITO.",
+  "ESTO NO NOS IMPORTA UNA MIERDA... PERO LOMBARDO SÍ.",
+  "REIGN IN BLOOD DURÓ 29 MINUTOS. TU ENTRENO TAMBIÉN PUEDE.",
+  "MANSANITO: LOS GILIPOLLAS TE ESPERAN EL JUEVES. GÁNATELO.",
+  "MASTER OF PUPPETS DURA 8 MINUTOS. TÚ PUEDES HACER UNA PLANCHA.",
+  "ACE OF SPADES DURA 2:47. SIN EXCUSAS PARA EL CALENTAMIENTO.",
+  "LOMBARDO GRABÓ REIGN IN BLOOD EN UNA SEMANA. TÚ PUEDES SALIR A PASEAR.",
+  "PEACE SELLS... PERO EL SOFÁ NO VENDE MÚSCULO, MANSANITO.",
+  "BATTERY DE METALLICA: 5 MINUTOS. TUS SENTADILLAS: 5 MINUTOS. ¿COINCIDENCIA? NO.",
+  "KERRY KING TIENE 60 AÑOS Y SIGUE EN ESCENA. SIN EXCUSAS.",
+  "¡TOMA MI PEPINO, MANSANITO! EL BOMBO TE ESPERA.",
+  "HANGAR 18 TIENE 516 NOTAS. TUS FLEXIONES TIENEN MENOS. VENGA YA.",
+  "LEMMY MURIÓ CON LAS BOTAS PUESTAS. TÚ AL MENOS PONTE LAS ZAPATILLAS.",
+];
+
+// ============================================================
+// STATE
+// ============================================================
+const today = new Date().getDay();
+let currentWeek = parseInt(localStorage.getItem("metal_week")||"1");
+let completed = JSON.parse(localStorage.getItem("metal_completed")||"{}");
+let streakDays = parseInt(localStorage.getItem("metal_streak")||"0");
+let motivIdx = 0;
+let beatPlaying = false;
+let audioCtx = null;
+let beatInterval = null;
+let beatStep = 0;
+
+function save(){
+  localStorage.setItem("metal_completed", JSON.stringify(completed));
+  localStorage.setItem("metal_week", currentWeek);
+  localStorage.setItem("metal_streak", streakDays);
+}
+
+function todayKey(extra){ return `${today}_w${currentWeek}_${extra}`; }
+function anyKey(day,extra){ return `${day}_w${currentWeek}_${extra}`; }
+
+function countDone(){ return Object.values(completed).filter(Boolean).length; }
+
+function updateStats(){
+  document.getElementById("stat-streak").textContent = streakDays;
+  document.getElementById("stat-week").textContent = "S"+currentWeek;
+  document.getElementById("stat-done").textContent = countDone();
+}
+
+// ============================================================
+// AUDIO
+// ============================================================
+function getAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+function playKick(ctx,t){
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);
+  o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(0.01,t+0.5);
+  g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(0.01,t+0.5);
+  o.start(t);o.stop(t+0.5);
+}
+function playSnare(ctx,t){
+  const sz=ctx.sampleRate*0.2,buf=ctx.createBuffer(1,sz,ctx.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<sz;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/sz,2);
+  const s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();
+  s.buffer=buf;f.type="highpass";f.frequency.value=1000;
+  g.gain.setValueAtTime(0.8,t);g.gain.exponentialRampToValueAtTime(0.01,t+0.2);
+  s.connect(f);f.connect(g);g.connect(ctx.destination);s.start(t);s.stop(t+0.2);
+}
+function playHihat(ctx,t){
+  const sz=ctx.sampleRate*0.05,buf=ctx.createBuffer(1,sz,ctx.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<sz;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/sz,3);
+  const s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();
+  s.buffer=buf;f.type="highpass";f.frequency.value=7000;
+  g.gain.setValueAtTime(0.5,t);g.gain.exponentialRampToValueAtTime(0.01,t+0.05);
+  s.connect(f);f.connect(g);g.connect(ctx.destination);s.start(t);s.stop(t+0.05);
+}
+function hitSound(){
+  try{
+    const ctx=getAudioCtx(),t=ctx.currentTime;
+    playKick(ctx,t);playSnare(ctx,t+0.15);
+  }catch(e){}
+}
+function toggleBeat(){
+  if(beatPlaying){
+    clearInterval(beatInterval);beatPlaying=false;
+    document.getElementById("beat-btn").textContent="🥁 ACTIVAR RITMO METAL";
+    return;
+  }
+  const ctx=getAudioCtx();
+  beatPlaying=true;
+  document.getElementById("beat-btn").textContent="⏹ SILENCIAR EL TRUENO";
+  const pattern=[
+    {k:true,s:false,h:true},{k:false,s:false,h:true},
+    {k:false,s:true,h:true},{k:false,s:false,h:true},
+    {k:true,s:false,h:true},{k:true,s:false,h:false},
+    {k:false,s:true,h:true},{k:false,s:false,h:true},
+  ];
+  const stepTime=(60/140)/2*1000;
+  beatInterval=setInterval(()=>{
+    const st=pattern[beatStep%pattern.length],t=ctx.currentTime;
+    if(st.k)playKick(ctx,t);if(st.s)playSnare(ctx,t);if(st.h)playHihat(ctx,t);
+    beatStep++;
+  },stepTime);
+}
+
+// ============================================================
+// TICKER
+// ============================================================
+function runTicker(){
+  const el = document.getElementById("ticker");
+  el.textContent = MOTIVATIONAL[motivIdx];
+  motivIdx = (motivIdx+1) % MOTIVATIONAL.length;
+  // Reset to right side
+  el.style.transition = "none";
+  el.style.transform = "translateX(100vw)";
+  // Force reflow
+  el.offsetWidth;
+  // Calculate full scroll distance: viewport width + text width
+  const totalDist = window.innerWidth + el.offsetWidth + 20;
+  const duration = totalDist / 80; // px per second
+  el.style.transition = `transform ${duration}s linear`;
+  el.style.transform = `translateX(-${el.offsetWidth + 20}px)`;
+  // When done, run next
+  setTimeout(runTicker, duration * 1000);
+}
+runTicker();
+
+// ============================================================
+// TABS & WEEK
+// ============================================================
+function setTab(t){
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.getElementById("tab-"+t).classList.add("active");
+  document.getElementById("panel-"+t).classList.add("active");
+  if(t==="rutina") renderRutina();
+  if(t==="semana") renderSemana();
+  if(t==="hoy") renderHoy();
+}
+function setWeek(w){
+  currentWeek=w;
+  save();
+  document.querySelectorAll(".week-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("wb"+w).classList.add("active");
+  updateStats();
+  renderHoy();renderRutina();renderSemana();
+}
+
+// ============================================================
+// TOGGLE COMPLETE
+// ============================================================
+function toggle(key){
+  completed[key]=!completed[key];
+  if(completed[key]){streakDays++;save();}
+  else{save();}
+  updateStats();
+  hitSound();
+  // flash today card
+  const tc=document.querySelector(".today-card");
+  if(tc){tc.classList.add("hit");setTimeout(()=>tc.classList.remove("hit"),400);}
+  renderHoy();
+}
+
+// ============================================================
+// RENDER HOY
+// ============================================================
+function renderHoy(){
+  const d=SCHEDULE[today];
+  const wk=`w${currentWeek}`;
+  let html=``;
+
+  // Today card
+  const typeLabel = d.type==="fuerza"?"DÍA DE FUERZA":d.type==="paseo"?"PASEO CON LOMBARDO":"DÍA DE DESCANSO";
+  html+=`<div class="today-card">
+    <div class="today-icon">${d.icon}</div>
+    <div class="today-day" style="color:${d.color}">${d.label}</div>
+    <div class="today-sub">${d.part} · ${typeLabel}</div>
+    <div class="flame-line" style="margin-top:12px"></div>
+  </div>`;
+
+  // Reward
+  if(REWARDS[today]){
+    const r=REWARDS[today];
+    html+=`<div class="reward-badge">
+      <div class="reward-icon">${r.icon}</div>
+      <div class="reward-text">${r.text}</div>
+      <div class="reward-sub">${r.sub}</div>
+    </div>`;
+  }
+
+  // LIBRE
+  if(d.type==="libre"){
+    html+=`<div class="libre-box">
+      <div class="libre-icon">⚡</div>
+      <div class="libre-title">DÍA LIBRE, GUERRERO</div>
+      <div class="libre-txt">Descansa. El cuerpo forja músculo mientras duermes.<br>Mañana vuelve el combate.</div>
+      <div style="font-size:1.8rem;margin-top:20px">🍺</div>
+      <div style="font-size:0.55rem;color:#8b44d4;letter-spacing:0.2em;margin-top:4px">PUEDES TOMARTE UNA BIRRA</div>
+    </div>`;
+  }
+
+  // FUERZA
+  if(d.type==="fuerza"){
+    // Stretching
+    html+=`<div class="section-div"><span class="fl"></span>ESTIRAMIENTOS<span class="fl"></span></div>`;
+    html+=`<div class="drum-grid">`;
+    STRETCH.forEach((s,i)=>{
+      const k=`stretch_${i}_${today}_${wk}`;
+      const done=completed[k];
+      html+=`<div class="drum-wrap">
+        <button class="drum-btn${done?" done":""}" onclick="toggle('${k}')">
+          <span class="d-icon">${s.icon}</span>
+          <span class="d-name">${s.name}</span>
+          <span class="d-sets">${s.duration}</span>
+          ${done?`<span class="d-done">✔ COMPLETADO</span>`:""}
+        </button>
+        <button class="como-btn" onclick="openModal('${s.icon}','${s.name}','${s.desc}','${s.yt}')">? CÓMO SE HACE</button>
+      </div>`;
+    });
+    html+=`</div>`;
+
+    // Strength
+    html+=`<div class="section-div"><span class="fl"></span>FUERZA — SEMANA ${currentWeek}<span class="fl"></span></div>`;
+    html+=`<div class="drum-grid">`;
+    STRENGTH.forEach((ex,i)=>{
+      const k=`str_${i}_${today}_${wk}`;
+      const done=completed[k];
+      const sets=ex.weeks[currentWeek-1];
+      html+=`<div class="drum-wrap">
+        <button class="drum-btn${done?" done":""}" onclick="toggle('${k}')">
+          <span class="d-icon">${ex.icon}</span>
+          <span class="d-name">${ex.name}</span>
+          <span class="d-sets">${sets}</span>
+          ${done?`<span class="d-done">✔ FORJADO</span>`:""}
+        </button>
+        <button class="como-btn" onclick="openModal('${ex.icon}','${ex.name}','${ex.desc}','${ex.yt}')">? CÓMO SE HACE</button>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // PASEO
+  if(d.type==="paseo"){
+    html+=`<div class="section-div"><span class="fl"></span>MISIÓN DEL DÍA<span class="fl"></span></div>`;
+    const wk2=`walk_${today}_${wk}`;
+    const wdone=completed[wk2];
+    html+=`<div class="walk-center">
+      <button class="walk-btn${wdone?" done":""}" onclick="toggle('${wk2}')">
+        <span class="w-icon">🐕</span>
+        <span class="w-name">${wdone?"LOMBARDO & TÚ":"PASEO CON LOMBARDO"}</span>
+        <span class="w-time">45-60 MIN</span>
+        ${wdone?`<span class="w-done">✔ CONQUISTADO</span>`:""}
+      </button>
+    </div>`;
+    WALK_TIPS.forEach(tip=>{
+      html+=`<div class="tip-item">${tip}</div>`;
+    });
+    html+=`<div class="section-div" style="margin-top:16px"><span class="fl"></span>ESTIRAR DESPUÉS<span class="fl"></span></div>`;
+    html+=`<div class="drum-grid-3">`;
+    STRETCH.slice(0,3).forEach((s,i)=>{
+      const k=`pstretch_${i}_${today}_${wk}`;
+      const done=completed[k];
+      html+=`<div class="drum-wrap">
+        <button class="drum-btn${done?" done":""}" onclick="toggle('${k}')">
+          <span class="d-icon">${s.icon}</span>
+          <span class="d-name">${s.name}</span>
+          ${done?`<span class="d-done">✔</span>`:""}
+        </button>
+        <button class="como-btn" onclick="openModal('${s.icon}','${s.name}','${s.desc}','${s.yt}')">? CÓMO SE HACE</button>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  document.getElementById("panel-hoy").innerHTML=html;
+}
+
+// ============================================================
+// RENDER RUTINA
+// ============================================================
+function renderRutina(){
+  let html=`<div style="font-size:0.6rem;color:#666;letter-spacing:0.3em;margin-bottom:14px;text-align:center">PROGRAMA DE 4 SEMANAS — PROGRESIÓN GRADUAL</div>`;
+  html+=`<div class="philosophy">"No se forja el acero en un día. Empieza suave, construye lento.<br>Tu cuerpo es el instrumento. La batería no miente: cada semana más fuerte."</div>`;
+  STRENGTH.forEach(ex=>{
+    html+=`<div class="ex-card">
+      <div class="ex-header"><span class="ex-icon">${ex.icon}</span><span class="ex-name">${ex.name}</span></div>
+      <div class="ex-weeks">`;
+    ex.weeks.forEach((s,wi)=>{
+      html+=`<div class="ex-week${currentWeek===wi+1?" active":""}">
+        <div class="ex-week-num">S${wi+1}</div>
+        <div class="ex-week-sets">${s}</div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  html+=`<div class="gold-div"><span class="gl"></span>RECOMPENSAS SEMANALES<span class="gl"></span></div>`;
+  Object.entries(REWARDS).forEach(([day,r])=>{
+    html+=`<div class="reward-card">
+      <div class="reward-card-icon">${r.icon}</div>
+      <div>
+        <div class="reward-card-text">${["DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO"][day]}: ${r.text}</div>
+        <div class="reward-card-sub">${r.sub}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById("panel-rutina").innerHTML=html;
+}
+
+// ============================================================
+// RENDER SEMANA
+// ============================================================
+function renderSemana(){
+  let html=`<div style="font-size:0.6rem;color:#666;letter-spacing:0.3em;margin-bottom:14px;text-align:center">VISTA SEMANAL — SEMANA ${currentWeek}</div>`;
+  const order=[1,2,3,4,5,6,0];
+  order.forEach(dn=>{
+    const d=SCHEDULE[dn];
+    const isToday=dn===today;
+    const doneKeys=Object.keys(completed).filter(k=>k.startsWith(`${dn}_w${currentWeek}`)&&completed[k]);
+    const typeDesc=d.type==="fuerza"?"ENTRENAMIENTO DE FUERZA":d.type==="paseo"?"PASEO LARGO CON LOMBARDO":"DESCANSO Y CERVEZAS";
+    html+=`<div class="week-day-card${isToday?" today":""}">
+      <div class="day-circle${isToday?" today":""}" style="background:radial-gradient(circle,${d.color}22,#111)">${d.icon}</div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span class="day-name${isToday?" today":""}">${d.label}</span>
+          ${isToday?`<span class="today-badge">• HOY</span>`:""}
+        </div>
+        <div class="day-desc">${d.part} — ${typeDesc}</div>
+        ${doneKeys.length>0?`<div class="day-done">✔ ${doneKeys.length} ejercicio${doneKeys.length!==1?"s":""} completado${doneKeys.length!==1?"s":""}</div>`:""}
+      </div>
+      ${REWARDS[dn]?`<div class="reward-dot">${REWARDS[dn].icon}</div>`:""}
+    </div>`;
+  });
+  html+=`<div class="summary-box">
+    <div class="summary-title">ESTRUCTURA SEMANAL</div>
+    <div class="summary-grid">
+      <div class="summary-cell" style="background:#0d0505;border:1px solid #3a0000">
+        <div class="summary-val" style="color:#cc2222">3</div><div class="summary-lbl">DÍAS FUERZA</div>
+      </div>
+      <div class="summary-cell" style="background:#050d1a;border:1px solid #002a3a">
+        <div class="summary-val" style="color:#2980b9">3</div><div class="summary-lbl">DÍAS PASEO</div>
+      </div>
+      <div class="summary-cell" style="background:#0d0a00;border:1px solid #3a2a00">
+        <div class="summary-val" style="color:#ffd700">2</div><div class="summary-lbl">RECOMPENSAS</div>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById("panel-semana").innerHTML=html;
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(icon, name, desc, yt){
+  document.getElementById("modal-icon").textContent = icon;
+  document.getElementById("modal-title").textContent = name;
+  document.getElementById("modal-desc").textContent = desc;
+  document.getElementById("modal-yt").href = yt;
+  document.getElementById("modal").classList.add("open");
+}
+function closeModal(e){
+  if(e.target.id==="modal") document.getElementById("modal").classList.remove("open");
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.getElementById("wb"+currentWeek).classList.add("active");
+[1,2,3,4].forEach(w=>document.getElementById("wb"+w).classList.remove("active"));
+document.getElementById("wb"+currentWeek).classList.add("active");
+updateStats();
+renderHoy();
+</script>
+</body>
+</html>
