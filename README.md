@@ -4,6 +4,10 @@
 
 El proyecto está orientado a una persona concreta, **Mansanito**, con una identidad visual propia y una lógica de seguimiento pensada para que la rutina no parezca una tabla gris de gimnasio pegada en la nevera.
 
+## Demo online
+
+[Probar Valhalla Fitness en Netlify](https://vitalab-alex-valhalla.netlify.app/)
+
 ## Concepto
 
 La idea principal es transformar una rutina de ejercicio en una pequeña aventura personal.
@@ -44,6 +48,7 @@ Esta dirección visual conecta especialmente bien con el perfil del usuario fina
 - CSS
 - JavaScript
 - Google Fonts
+- Netlify para despliegue online
 
 ## Estructura del proyecto
 
@@ -52,17 +57,23 @@ El proyecto está planteado como una aplicación web ligera, orientada a navegad
 ```txt
 valhalla-fitness/
 ├── README.md
-└── aplicación HTML principal
+├── index.html
+└── mansanito-valhalla-3.html
 ```
+
+`index.html` funciona como entrada estándar del proyecto.  
+`mansanito-valhalla-3.html` conserva la aplicación principal original.
 
 ## Cómo usarlo
 
-1. Abrir la aplicación en el navegador.
-2. Seleccionar la semana correspondiente.
-3. Revisar la rutina o los ejercicios del día.
-4. Marcar los ejercicios completados.
-5. Consultar el progreso y las recompensas visuales.
-6. Mantener la constancia sin perder el tono épico del proyecto.
+1. Abrir la [demo online en Netlify](https://vitalab-alex-valhalla.netlify.app/) o clonar el repositorio.
+2. Si se usa en local, abrir `index.html` en el navegador.
+3. Entrar en la aplicación principal desde el botón de inicio.
+4. Seleccionar la semana correspondiente.
+5. Revisar la rutina o los ejercicios del día.
+6. Marcar los ejercicios completados.
+7. Consultar el progreso y las recompensas visuales.
+8. Mantener la constancia sin perder el tono épico del proyecto.
 
 ## Enfoque Vitalab
 
@@ -82,20 +93,20 @@ Con este proyecto se practican conceptos como:
 - Interacción de usuario con JavaScript.
 - Creación de interfaces emocionales, no solo funcionales.
 - Desarrollo de proyectos web ligeros orientados a casos reales.
+- Preparación de proyectos para despliegue web y portfolio.
 
 ## Posibles mejoras futuras
 
-- Localizar y renombrar el archivo principal a `index.html` para facilitar el despliegue.
 - Separar HTML, CSS y JavaScript en archivos independientes.
 - Añadir persistencia más robusta para el progreso.
 - Incluir estadísticas semanales o mensuales.
 - Añadir edición de ejercicios desde la interfaz.
-- Publicar una demo online mediante GitHub Pages o Netlify.
 - Añadir capturas de pantalla al README.
+- Preparar una futura versión refactorizada con estructura DAM.
 
 ## Estado del proyecto
 
-Proyecto funcional en fase de aprendizaje y mejora continua.
+Proyecto funcional, desplegado online y en fase de mejora continua.
 
 ## Autor
 
